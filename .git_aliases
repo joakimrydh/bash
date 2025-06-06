@@ -1,0 +1,18 @@
+# git aliases
+alias gst='git status'
+
+# Add code
+alias gco='git commit'
+alias gp='git push'
+alias gps='git push'
+alias gcp='git commit;git push'
+
+# Get gode
+alias gpl='git pull'
+alias gfe='git fetch'
+alias gpf='git pull; git fetch'
+
+# Branches
+alias gcb='git checkout $1'
+alias gnb='git checkout -b $1'
+alias gcmpf='git checkout main;git pull; git fetch'
