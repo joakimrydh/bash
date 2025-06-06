@@ -8,7 +8,7 @@ function _workspaces()
     local cur
     COMPREPLY=()
     cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=($( compgen -W "$(ls -d ~/code/workspaces/*/|cut -d "/" -f 6)" -- $cur ) )
+    COMPREPLY=($( compgen -W "$(ls -d $DEV_BASEPATH/workspaces/*/|rev|cut -d "/" -f 2|rev)" -- $cur ) )
 }
 
 complete -F _workspaces dev

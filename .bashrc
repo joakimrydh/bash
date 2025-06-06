@@ -25,27 +25,30 @@ cl ()
   fi
 }
 
+DEV_BASEPATH=~/code
+
 # Select development environment
 # Enable tab completion in .dev-completion.bash
 dev ()
 {
-    source ~/code/venvs/"$1"/bin/activate &&
-    cd -P -- ~/code/workspaces/"$1"
+    cd -P -- "$DEV_BASEPATH"/workspaces/"$1"
 }
 # Select development environment and python venv
 # Enable tab completion in .dev-completion.bash
 devv ()
 {
-    source ~/code/venvs/"$1"/bin/activate &&
-    cd -P -- ~/code/workspaces/"$1"
+    if [ -f "$DEV_BASEPATH"/venvs/"$1"/bin/activate ]; then
+        source "$DEV_BASEPATH"/venvs/"$1"/bin/activate
+    fi
+    cd -P -- "$DEV_BASEPATH"/workspaces/"$1"
 }
 
 # Create development environment
 mkdev ()
 {
     if [ "$1" ]; then
-        mkdir ~/code/workspaces/"$1" &&
-        cd -P -- ~/code/workspaces/"$1"
+        mkdir "$DEV_BASEPATH"/workspaces/"$1" &&
+        cd -P -- "$DEV_BASEPATH"/workspaces/"$1"
     else
         echo "Empty name supplied..."
     fi
@@ -55,8 +58,8 @@ mkdev ()
 mkdevv ()
 {
     if [ "$1" ]; then
-        python3 -m venv ~/code/venvs/"$1" &&
-        source ~/code/venvs/"$1"/bin/activate &&
+        python3 -m venv "$DEV_BASEPATH"/venvs/"$1" &&
+        source "$DEV_BASEPATH"/venvs/"$1"/bin/activate &&
         mkdev "$1"
     else
         echo "Empty name supplied..."
@@ -67,12 +70,12 @@ mkdevv ()
 # Enable tab completion in .dev-completion.bash
 rmdev ()
 {
-    cd ~/code/workspaces
-    if [ -d ~/code/venvs/"$1" ]; then
+    cd "$DEV_BASEPATH"/workspaces
+    if [ -d "$DEV_BASEPATH"/venvs/"$1" ]; then
         deactivate &&
-        rm -rf ~/code/venvs/"$1"
+        rm -rf "$DEV_BASEPATH"/venvs/"$1"
     fi
-    rm -rf ~/code/workspaces/"$1"
+    rm -rf "$DEV_BASEPATH"/workspaces/"$1"
 }
 
 # Add tab completion to dev command
