@@ -95,3 +95,6 @@ gh ()
     cat ~/.git_aliases
 }
 
+# Better colors for dirs/files with 777.
+# Add at end of .bashrc, or at least after "enable color support of ls..."
+LS_COLORS="$LS_COLORS:ow=40;36;01"
