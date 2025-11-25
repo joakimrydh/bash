@@ -81,9 +81,19 @@ rmdev ()
 # Add tab completion to dev command
 source ~/.dev-completion.bash
 
+# Open code workspace in this folder or the one above
+codew ()
+{
+    myarray=(`find ./ -maxdepth 1 -name "*.code-workspace"`)
+    if [ ${#myarray[@]} -eq 0 ]; then
+        myarray=(`find ../ -maxdepth 1 -name "*.code-workspace"`)
+    fi
+    echo ${myarray}
+    code ${myarray[0]}
+}
+
 # set XON/XOFF active
 [[ $- == *i* ]] && stty -ixon
-
 
 # Fix password entry for gpg signing over ssh
 # sudo update-alternatives --config pinentry
