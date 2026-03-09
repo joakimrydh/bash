@@ -1,3 +1,27 @@
+## History file setup.
+# If in a tmux environment, save history per pane. Basic terminal window hoistory is saved like normal in .bash_history 
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=10000000
+HISTFILESIZE=20000000
+if [[ $TMUX_PANE ]]; then
+    HISTFILE=$HOME/.bash_history_tmux_${TMUX_PANE:1}
+fi
+# append to the history file, don't overwrite it
+shopt -s histappend
+PROMPT_COMMAND+=("history -a")
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+
+
+## Improved colors. Blue folder names on black sucks.
 # Better colors than standard ubuntu
 if [ "$color_prompt" = yes ]; then
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -14,7 +38,7 @@ mkcd ()
      cd -P -- "$1"
 }
 
-# cd into a dir an run ls
+# cd into a dir and run ls
 cl ()
 {
   if [ -z "$1" ]; then
@@ -25,16 +49,15 @@ cl ()
   fi
 }
 
-DEV_BASEPATH=~/code
+## dev commands
+# Enable tab completion in .dev-completion.bash
 
 # Select development environment
-# Enable tab completion in .dev-completion.bash
 dev ()
 {
     cd -P -- "$DEV_BASEPATH"/workspaces/"$1"
 }
 # Select development environment and python venv
-# Enable tab completion in .dev-completion.bash
 devv ()
 {
     if [ -f "$DEV_BASEPATH"/venvs/"$1"/bin/activate ]; then
@@ -67,7 +90,6 @@ mkdevv ()
 }
 
 # Remove development environment
-# Enable tab completion in .dev-completion.bash
 rmdev ()
 {
     cd "$DEV_BASEPATH"/workspaces
@@ -79,6 +101,7 @@ rmdev ()
 }
 
 # Add tab completion to dev command
+DEV_BASEPATH=~/code
 source ~/.dev-completion.bash
 
 # Open code workspace in this folder or the one above
