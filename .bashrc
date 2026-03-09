@@ -91,6 +91,7 @@ codew ()
     echo ${myarray}
     code ${myarray[0]}
 }
+alias cw='codew'
 
 # set XON/XOFF active
 [[ $- == *i* ]] && stty -ixon
@@ -111,3 +112,7 @@ gh ()
 # Better colors for dirs/files with 777.
 # Add at end of .bashrc, or at least after "enable color support of ls..."
 LS_COLORS="$LS_COLORS:ow=40;36;01"
+
+# Keep secret keys in ~/.bashrc-secrets to stop them from leeking into history.
+# They are still saved in clear text, but will not be visible at least...
+source ~/.bashrc-secrets
