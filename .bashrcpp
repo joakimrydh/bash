@@ -9,8 +9,8 @@
 HISTCONTROL=ignoreboth
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000000
-HISTFILESIZE=20000000
+HISTSIZE=-1
+HISTFILESIZE=-1
 if [[ $TMUX_PANE ]]; then
     HISTFILE=$HOME/.bash_history_tmux_${TMUX_PANE:1}
 fi
