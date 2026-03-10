@@ -18,6 +18,11 @@ fi
 shopt -s histappend
 PROMPT_COMMAND+=("history -a")
 
+ctrlr() {
+    grep -ri "${1}" $HOME/.bhistory/
+}
+alias cr=ctrlr
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
