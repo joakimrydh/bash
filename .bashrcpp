@@ -1,8 +1,8 @@
 # Source this file in .bashrc by adding
-# source ~/.bashrcpp
+# . ~/.bashrcpp
 
 ## History file setup.
-# If in a tmux environment, save history per pane. Basic terminal window hoistory is saved like normal in .bash_history 
+# If in a tmux environment, save history per pane. Basic terminal window hoistory is saved like normal in .bash_history
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -22,7 +22,10 @@ PROMPT_COMMAND+=("history -a")
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
 ## Improved colors. Blue folder names on black sucks.
 # Better colors than standard ubuntu
 if [ "$color_prompt" = yes ]; then
@@ -31,7 +34,9 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
-LS_COLORS=$LS_COLORS:'di=0;32:' ; export LS_COLORS
+LS_COLORS="$LS_COLORS:di=0;32:ow=40;36;01"
+
+unset color_prompt force_color_prompt
 
 # Make dir and cd into it
 mkcd ()
@@ -51,6 +56,17 @@ cl ()
   fi
 }
 
+# cd into a dir and run ls
+cll ()
+{
+  if [ -z "$1" ]; then
+    ll .
+  else
+    cd -P -- "$1" &&
+    ll .
+  fi
+}
+
 ## dev commands
 # Enable tab completion in .dev-completion.bash
 
@@ -63,7 +79,7 @@ dev ()
 devv ()
 {
     if [ -f "$DEV_BASEPATH"/venvs/"$1"/bin/activate ]; then
-        source "$DEV_BASEPATH"/venvs/"$1"/bin/activate
+        . "$DEV_BASEPATH"/venvs/"$1"/bin/activate
     fi
     cd -P -- "$DEV_BASEPATH"/workspaces/"$1"
 }
@@ -84,7 +100,7 @@ mkdevv ()
 {
     if [ "$1" ]; then
         python3 -m venv "$DEV_BASEPATH"/venvs/"$1" &&
-        source "$DEV_BASEPATH"/venvs/"$1"/bin/activate &&
+        . "$DEV_BASEPATH"/venvs/"$1"/bin/activate &&
         mkdev "$1"
     else
         echo "Empty name supplied..."
@@ -104,7 +120,7 @@ rmdev ()
 
 # Add tab completion to dev command
 DEV_BASEPATH=~/code
-source ~/.dev-completion.bash
+. ~/.dev-completion.bash
 
 # Open code workspace in this folder or the one above
 codew ()
@@ -128,16 +144,20 @@ alias cw='codew'
 export GPG_TTY=$(tty)
 
 # git aliases
-source ~/.git_aliases
+if [ -f ~/.git_aliases ]; then
+    . ~/.git_aliases
+fi
 gh ()
 {
-    cat ~/.git_aliases
+    if [ -f ~/.git_aliases ]; then
+        cat ~/.git_aliases
+    else
+        echo "git_aliases not installed"
+    fi
 }
-
-# Better colors for dirs/files with 777.
-# Add at end of .bashrc, or at least after "enable color support of ls..."
-LS_COLORS="$LS_COLORS:ow=40;36;01"
 
 # Keep secret keys in ~/.bashrc-secrets to stop them from leaking into history.
 # They are still saved in clear text, but will not be visible at least...
-source ~/.bashrc-secrets
+if [ -f ~/.bashrc-secrets ]; then
+    . ~/.bashrc-secrets
+fi
