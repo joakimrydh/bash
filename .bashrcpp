@@ -1,3 +1,6 @@
+# Source this file in .bashrc by adding
+# source ~/.bashrcpp
+
 ## History file setup.
 # If in a tmux environment, save history per pane. Basic terminal window hoistory is saved like normal in .bash_history 
 
@@ -18,7 +21,6 @@ PROMPT_COMMAND+=("history -a")
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
 
 
 ## Improved colors. Blue folder names on black sucks.
@@ -136,6 +138,6 @@ gh ()
 # Add at end of .bashrc, or at least after "enable color support of ls..."
 LS_COLORS="$LS_COLORS:ow=40;36;01"
 
-# Keep secret keys in ~/.bashrc-secrets to stop them from leeking into history.
+# Keep secret keys in ~/.bashrc-secrets to stop them from leaking into history.
 # They are still saved in clear text, but will not be visible at least...
 source ~/.bashrc-secrets
