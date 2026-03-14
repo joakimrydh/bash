@@ -10,7 +10,14 @@ function _workspaces()
     cur=${COMP_WORDS[COMP_CWORD]}
     COMPREPLY=($( compgen -W "$(ls -d $DEV_BASEPATH/workspaces/*/|rev|cut -d "/" -f 2|rev)" -- $cur ) )
 }
-
 complete -F _workspaces dev
-complete -F _workspaces devv
 complete -F _workspaces rmdev
+
+function _venv_workspaces()
+{
+    local cur
+    COMPREPLY=()
+    cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=($( compgen -W "$(ls -d $DEV_BASEPATH/venvs/*/|rev|cut -d "/" -f 2|rev)" -- $cur ) )
+}
+complete -F _venv_workspaces devv
