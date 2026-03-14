@@ -74,6 +74,7 @@ cll ()
 
 ## dev commands
 # Enable tab completion in .dev-completion.bash
+DEV_BASEPATH=~/projects/code
 
 # Select development environment
 dev ()
