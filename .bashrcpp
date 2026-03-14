@@ -124,8 +124,7 @@ rmdev ()
     rm -rf "$DEV_BASEPATH"/workspaces/"$1"
 }
 
-# Add tab completion to dev command
-DEV_BASEPATH=~/code
+# Add tab completion to dev commands
 . ~/.dev-completion.bash
 
 # Open code workspace in this folder or the one above
