@@ -139,6 +139,9 @@ codew ()
 }
 alias cw='codew'
 
+# Open zed "here" quick
+alias zz='zed .'
+
 # set XON/XOFF active
 [[ $- == *i* ]] && stty -ixon
 
