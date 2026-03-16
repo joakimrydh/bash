@@ -1,4 +1,5 @@
-// Install using https://debian.griffo.io/install-latest-zed-in-ubuntu.html
+// Install zed using https://debian.griffo.io/install-latest-zed-in-ubuntu.html
+// Save this file ~/.config/zed/settings.json
 
 // Zed settings
 //
@@ -9,6 +10,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Bearded Icon Theme", // Must be installed
   "cursor_shape": "bar",
   "buffer_line_height": "standard",
   "project_panel": {
