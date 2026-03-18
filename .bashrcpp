@@ -139,6 +139,18 @@ codew ()
 }
 alias cw='codew'
 
+# Open workspace in zed, from any place in the workspace
+zedw ()
+{
+    if [[ $PWD/ =~ (.*/workspaces/[^/]*).*/ ]]; then
+        echo ${BASH_REMATCH[1]}
+        zed ${BASH_REMATCH[1]}
+    else
+        echo "No workspace found"
+        zed .
+    fi
+}
+alias zw='zedw'
 # Open zed "here" quick
 alias zz='zed .'
 
