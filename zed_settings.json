@@ -30,6 +30,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Ayu Dark",
+    // "dark": "Ayu Dark",
+    "dark": "VSCode Nicer Dark High Contrast",
   },
 }
