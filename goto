@@ -1,0 +1,4 @@
+#/usr/bin/env bash
+# Add this file to a workspace and dev/devv aliases will run it.
+echo "goto found, leaving $PWD"
+cd /other/path/where/stuff/exists/
