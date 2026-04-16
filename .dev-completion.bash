@@ -11,6 +11,7 @@ function _workspaces()
     COMPREPLY=($( compgen -W "$(ls -d $DEV_BASEPATH/workspaces/*/|rev|cut -d "/" -f 2|rev)" -- $cur ) )
 }
 complete -F _workspaces dev
+complete -F _workspaces devr
 complete -F _workspaces rmdev
 
 function _venv_workspaces()
