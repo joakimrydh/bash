@@ -77,9 +77,16 @@ cll ()
 DEV_BASEPATH=~/projects/code
 
 # Select development environment
-dev ()
+devr ()
 {
     cd -P -- "$DEV_BASEPATH"/workspaces/"$1"
+}
+dev ()
+{
+    devr "$1"
+    if [ -f goto ]; then
+        . goto
+    fi
 }
 # Select development environment and python venv
 devv ()
@@ -87,7 +94,7 @@ devv ()
     if [ -f "$DEV_BASEPATH"/venvs/"$1"/bin/activate ]; then
         . "$DEV_BASEPATH"/venvs/"$1"/bin/activate
     fi
-    cd -P -- "$DEV_BASEPATH"/workspaces/"$1"
+    dev "$1"
 }
 
 # Create development environment
