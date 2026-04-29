@@ -14,5 +14,7 @@ alias gpf='git pull; git fetch'
 
 # Branches
 alias gcb='git checkout $1'
-alias gnb='git checkout -b $1'
+# alias gnb='git checkout -b $1' # Select the flavour of gnb you need
+# gnb(){ git checkout -b ${USER}/$1; } # With user in the branch name
+alias gcm='git checkout main'
 alias gcmpf='git checkout main;git pull; git fetch'
