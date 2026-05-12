@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Source this file in .bashrc by adding
 # . ~/.bashrcpp
 
@@ -11,15 +12,18 @@ HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=-1
 HISTFILESIZE=-1
+TMUX_HISTDICT=$HOME/.history
+mkdir -p $TMUX_HISTDICT
 if [[ $TMUX_PANE ]]; then
-    HISTFILE=$HOME/.bash_history_tmux_${TMUX_PANE:1}
+    session_name=$(tmux list-panes -F '#{?pane_active,#S_#P,}')
+    HISTFILE=$TMUX_HISTDICT/.${session_name}
 fi
 # append to the history file, don't overwrite it
 shopt -s histappend
 PROMPT_COMMAND+=("history -a")
 
 ctrlr() {
-    grep -ri "${1}" $HOME/.bhistory/
+    (cd $TMUX_HISTDICT && grep -ri "${1}")
 }
 alias cr=ctrlr
 
@@ -61,7 +65,7 @@ cl ()
   fi
 }
 
-# cd into a dir and run ls
+# cd into a dir and run ll
 cll ()
 {
   if [ -z "$1" ]; then
@@ -166,7 +170,7 @@ alias zz='zed .'
 
 # Fix password entry for gpg signing over ssh
 # sudo update-alternatives --config pinentry
-#   select pinentry-curses
+#   select pinentry-curses
 # gpg-connect-agent reloadagent /bye
 export GPG_TTY=$(tty)
 
@@ -188,3 +192,5 @@ gh ()
 if [ -f ~/.bashrc-secrets ]; then
     . ~/.bashrc-secrets
 fi
+
+alias rrc='. ~/.bashrc;echo "Reloaded ~/.bashrc"'
