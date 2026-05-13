@@ -15,7 +15,7 @@ HISTFILESIZE=-1
 TMUX_HISTDICT=$HOME/.history
 mkdir -p $TMUX_HISTDICT
 if [[ $TMUX_PANE ]]; then
-    session_name=$(tmux list-panes -F '#{?pane_active,#S_#P,}')
+    session_name=$(tmux list-panes -F '#{?pane_active,#S_#P,}' | grep .)
     HISTFILE=$TMUX_HISTDICT/.${session_name}
 fi
 # append to the history file, don't overwrite it
