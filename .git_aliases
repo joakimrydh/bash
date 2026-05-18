@@ -3,9 +3,14 @@ alias gst='git status'
 
 # Add code
 alias gco='git commit'
+alias gca='git commit --amend'
+
 alias gp='git push'
-alias gps='git push'
-alias gcp='git commit;git push'
+alias gps='git push origin HEAD:refs/for/master'
+alias gpsw='git push origin HEAD:refs/for/master%wip'
+
+alias gcp='git commit --amend; git push origin HEAD:refs/for/master'
+alias gcpw='git commit --amend; git push origin HEAD:refs/for/master%wip'
 
 # Get gode
 alias gpl='git pull'
@@ -17,4 +22,4 @@ alias gcb='git checkout $1'
 # alias gnb='git checkout -b $1' # Select the flavour of gnb you need
 # gnb(){ git checkout -b ${USER}/$1; } # With user in the branch name
 alias gcm='git checkout main'
-alias gcmpf='git checkout main;git pull; git fetch'
+alias gcmpf='git checkout main; git pull; git fetch'
