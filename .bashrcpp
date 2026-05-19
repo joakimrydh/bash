@@ -76,6 +76,9 @@ cll ()
   fi
 }
 
+# autocorrections
+alias cd..='cd ..'
+
 ## dev commands
 # Enable tab completion in .dev-completion.bash
 DEV_BASEPATH=~/projects/code
