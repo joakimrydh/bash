@@ -15,8 +15,18 @@ HISTFILESIZE=-1
 TMUX_HISTDICT=$HOME/.history
 mkdir -p $TMUX_HISTDICT
 if [[ $TMUX_PANE ]]; then
-    session_name=$(tmux list-panes -F '#{?pane_active,#S_#P,}' | grep .)
-    HISTFILE=$TMUX_HISTDICT/.${session_name}
+    pane_title_prefix="!!"
+    pane_title=$(tmux display -pt "${TMUX_PANE}" "#{pane_title}")
+    # Check if we've already set this pane title
+    if [[ "$pane_title" != "$pane_title_prefix"* ]]; then
+        # Set pane_index to number of panes - 1
+        pane_index=$(($(tmux list-panes | wc -l) - 1))
+        title="$pane_title_prefix$pane_index"
+        printf "\033]2;$title\033\\"
+    fi
+    # History file is . + session name + pane title
+    # Example: ".mysession!!0"
+    HISTFILE=$TMUX_HISTDICT/.$(tmux display -pt "${TMUX_PANE}" "#S#T")
 fi
 # append to the history file, don't overwrite it
 shopt -s histappend
