@@ -19,9 +19,17 @@ if [[ $TMUX_PANE ]]; then
     pane_title=$(tmux display -pt "${TMUX_PANE}" "#{pane_title}")
     # Check if we've already set this pane title
     if [[ "$pane_title" != "$pane_title_prefix"* ]]; then
-        # Set pane_index to number of panes - 1
-        pane_index=$(($(tmux list-panes | wc -l) - 1))
-        title="$pane_title_prefix$pane_index"
+        # Find next free pane index
+        pane_count=$(($(tmux list-panes | wc -l) - 1))
+        # Fetch all pane titles
+        pane_titles=$(tmux list-panes -F "#{pane_title}#")
+        # Loop from 0 up to find the next available gap.
+        for (( i=0; i<=$pane_count; i++ ));{
+            if [[ "$pane_titles" != *"$pane_title_prefix$i#"* ]]; then
+                break
+            fi
+        }
+        title="$pane_title_prefix$i"
         printf "\033]2;$title\033\\"
     fi
     # History file is . + session name + pane title
