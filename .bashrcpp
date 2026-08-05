@@ -109,6 +109,10 @@ alias cd..='cd ..'
 # Enable tab completion in .dev-completion.bash
 DEV_BASEPATH=~/projects/code
 
+# Create dev folders
+mkdir -p "$DEV_BASEPATH"/workspaces
+mkdir -p "$DEV_BASEPATH"/venvs
+
 # Select development environment
 devr ()
 {
