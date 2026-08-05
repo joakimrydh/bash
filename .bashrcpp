@@ -3,7 +3,7 @@
 # . ~/.bashrcpp
 
 ## History file setup.
-# If in a tmux environment, save history per pane. Basic terminal window hoistory is saved like normal in .bash_history
+# If in a tmux environment, save history per pane. Basic terminal window history is saved like normal in .bash_history
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -39,6 +39,14 @@ fi
 # append to the history file, don't overwrite it
 shopt -s histappend
 PROMPT_COMMAND+=("history -a")
+
+# Function for adding entries to PATH without setting duplicates
+function toPATH {
+  case ":$PATH:" in
+    *":$1:"*) :;; # already there
+    *) PATH="$1:$PATH";; # or PATH="$PATH:$1"
+  esac
+}
 
 ctrlr() {
     (cd $TMUX_HISTDICT && grep -ri "${1}")
