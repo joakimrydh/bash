@@ -40,6 +40,24 @@ fi
 shopt -s histappend
 PROMPT_COMMAND+=("history -a")
 
+# Add tmuxs command with tab completion of existing sessions
+tmuxs ()
+{
+    if [ -z "$1" ]; then
+        tmux new-session -A -s init
+    else
+        tmux new-session -A -s "$1"
+    fi
+}
+
+_tmuxls()
+{
+    local cur
+    cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=($( compgen -W "$(tmux ls -F "#{session_name}")" -- $cur ) )
+}
+complete -F _tmuxls tmuxs
+
 # Function for adding entries to PATH without setting duplicates
 function toPATH {
   case ":$PATH:" in
