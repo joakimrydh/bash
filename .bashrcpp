@@ -12,51 +12,56 @@ HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=-1
 HISTFILESIZE=-1
-TMUX_HISTDICT=$HOME/.history
-mkdir -p $TMUX_HISTDICT
-if [[ $TMUX_PANE ]]; then
-    pane_title_prefix="!!"
-    pane_title=$(tmux display -pt "${TMUX_PANE}" "#{pane_title}")
-    # Check if we've already set this pane title
-    if [[ "$pane_title" != "$pane_title_prefix"* ]]; then
-        # Find next free pane index
-        pane_count=$(($(tmux list-panes | wc -l) - 1))
-        # Fetch all pane titles
-        pane_titles=$(tmux list-panes -F "#{pane_title}#")
-        # Loop from 0 up to find the next available gap.
-        for (( i=0; i<=$pane_count; i++ ));{
-            if [[ "$pane_titles" != *"$pane_title_prefix$i#"* ]]; then
-                break
-            fi
-        }
-        title="$pane_title_prefix$i"
-        printf "\033]2;$title\033\\"
-    fi
-    # History file is . + session name + pane title
-    # Example: ".mysession!!0"
-    HISTFILE=$TMUX_HISTDICT/.$(tmux display -pt "${TMUX_PANE}" "#S#T")
-fi
 # append to the history file, don't overwrite it
 shopt -s histappend
 PROMPT_COMMAND+=("history -a")
 
-# Add tmuxs command with tab completion of existing sessions
-tmuxs ()
-{
-    if [ -z "$1" ]; then
-        tmux new-session -A -s init
-    else
-        tmux new-session -A -s "$1"
+# Set tmux pane history etc if tmux is installed.
+if hash tmux >/dev/null 2>&1
+then
+    TMUX_HISTDICT=$HOME/.history
+    mkdir -p $TMUX_HISTDICT
+    if [[ $TMUX_PANE ]]; then
+        pane_title_prefix="!!"
+        pane_title=$(tmux display -pt "${TMUX_PANE}" "#{pane_title}")
+        # Check if we've already set this pane title
+        if [[ "$pane_title" != "$pane_title_prefix"* ]]; then
+            # Find next free pane index
+            pane_count=$(($(tmux list-panes | wc -l) - 1))
+            # Fetch all pane titles
+            pane_titles=$(tmux list-panes -F "#{pane_title}#")
+            # Loop from 0 up to find the next available gap.
+            for (( i=0; i<=$pane_count; i++ ));{
+                if [[ "$pane_titles" != *"$pane_title_prefix$i#"* ]]; then
+                    break
+                fi
+            }
+            title="$pane_title_prefix$i"
+            printf "\033]2;$title\033\\"
+        fi
+        # History file is . + session name + pane title
+        # Example: ".mysession!!0"
+        HISTFILE=$TMUX_HISTDICT/.$(tmux display -pt "${TMUX_PANE}" "#S#T")
     fi
-}
-
-_tmuxls()
-{
-    local cur
-    cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=($( compgen -W "$(tmux ls -F "#{session_name}")" -- $cur ) )
-}
-complete -F _tmuxls tmuxs
+    
+    # Add tmuxs command with tab completion of existing sessions
+    tmuxs ()
+    {
+        if [ -z "$1" ]; then
+            tmux new-session -A -s init
+        else
+            tmux new-session -A -s "$1"
+        fi
+    }
+    
+    _tmuxls()
+    {
+        local cur
+        cur=${COMP_WORDS[COMP_CWORD]}
+        COMPREPLY=($( compgen -W "$(tmux ls -F "#{session_name}")" -- $cur ) )
+    }
+    complete -F _tmuxls tmuxs
+fi
 
 # Function for adding entries to PATH without setting duplicates
 function toPATH {
