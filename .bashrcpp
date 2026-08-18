@@ -72,7 +72,8 @@ function toPATH {
 }
 
 ctrlr() {
-    (cd $TMUX_HISTDICT && grep -ri "${1}")
+    grep -ri "${1}" ~/.bash_history
+    grep -ri "${1}" $TMUX_HISTDICT
 }
 alias cr=ctrlr
 
