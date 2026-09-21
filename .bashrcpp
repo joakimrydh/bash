@@ -261,3 +261,8 @@ mvold()
         echo "Must supply a name..."
     fi
 }
+
+wsn()
+{
+    ~/.local/workspace_name.py $1
+}
