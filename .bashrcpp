@@ -264,5 +264,5 @@ mvold()
 
 wsn()
 {
-    ~/.local/workspace_name.py $1
+    ~/.local/workspace_name.py "$@"
 }
