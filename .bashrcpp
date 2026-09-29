@@ -254,9 +254,10 @@ alias rrc='. ~/.bashrc;echo "Reloaded ~/.bashrc"'
 
 mvold()
 {
-    # Rename a file or folder by appending the current date & time
+    # Rename a file or folder by appending the current date & time.
     if [ "$1" ]; then
-        mv -v "$1" "$1_$(date +%y%m%d_%H%M)"
+        # ${1%/} strips a trailing / from $1.
+        mv -v "$1" "${1%/}_$(date +%y%m%d_%H%M)"
     else
         echo "Must supply a name..."
     fi
