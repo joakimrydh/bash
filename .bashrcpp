@@ -263,6 +263,23 @@ mvold()
     fi
 }
 
+mvbak()
+{
+    # Add or remove .bak from a file or folder.
+    if [ "$1" ]; then
+        # ${1%/} strips a trailing / from $1.
+        input="${1%/}"
+        # If input already ends with .bak, remove it.
+        if [[ "$input" == *.bak ]]; then
+            mv -v "$input" "${input%.bak}"
+        else
+            mv -v "$input" "$input.bak"
+        fi
+    else
+        echo "Must supply a name..."
+    fi
+}
+
 wsn()
 {
     ~/.local/workspace_name.py "$@"
