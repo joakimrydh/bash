@@ -186,7 +186,7 @@ rmdev ()
 {
     cd "$DEV_BASEPATH"/workspaces
     if [ -d "$DEV_BASEPATH"/venvs/"$1" ]; then
-        deactivate &&
+        deactivate
         rm -rf "$DEV_BASEPATH"/venvs/"$1"
     fi
     rm -rf "$DEV_BASEPATH"/workspaces/"$1"
