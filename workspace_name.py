@@ -31,5 +31,7 @@ if __name__ == '__main__':
 
     if args.workspace_name == '?':
         print(f'Current workspace is named "{get_workspace_name()}"')
+    elif args.workspace_name == '??':
+        print(get_workspace_name())
     else:
         set_workspace_name(args.workspace_name)
