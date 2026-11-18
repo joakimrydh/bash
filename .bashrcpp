@@ -288,3 +288,9 @@ wsn()
 {
     ~/.local/workspace_name.py "$@"
 }
+
+getgerrithook()
+{
+    # cd into the submodule that you want and run this command
+    mkdir -p `git rev-parse --git-dir`/hooks/ && curl -fLo `git rev-parse --git-dir`/hooks/commit-msg ...add gerrit instance here.../tools/hooks/commit-msg && chmod +x `git rev-parse --git-dir`/hooks/commit-msg
+}
