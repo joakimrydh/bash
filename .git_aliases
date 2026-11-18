@@ -17,6 +17,8 @@ alias gpl='git pull'
 alias gfe='git fetch'
 alias gpf='git pull; git fetch'
 
+alias ggh='getgerrithook' # cd into the submodule that you need and run ggh
+
 # Branches
 alias gcb='git checkout $1'
 # alias gnb='git checkout -b $1' # Select the flavour of gnb you need
