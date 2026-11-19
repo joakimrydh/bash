@@ -4,7 +4,11 @@
 
 # If some long running command should npotify when it is done, add this-ish:
 # notify-send "Message here" --app-name="Command name here" --icon=stock_yes # More icons exist in /usr/share/icons
-# notify-send "Message" --app-name="Done with command on workspace \"$(wsn ??)\"" --icon=stock_yes
+
+# To include the workspace name:
+# WSN=$(wsn ??)
+# "do slow thing here"
+# notify-send "Message" --app-name="Done with command on workspace \"$WSN\"" --icon=stock_yes
 
 ## History file setup.
 # If in a tmux environment, save history per pane. Basic terminal window history is saved like normal in .bash_history
